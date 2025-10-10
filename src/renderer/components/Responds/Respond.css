@@ -1,0 +1,36 @@
+/* Namespace: .tree-menu-resp */
+
+.tree-menu-resp {
+    list-style-type: none;
+    padding-left: 0;
+    font-family: Arial, sans-serif;
+}
+
+.tree-menu-resp .caret-resp {
+    cursor: pointer;
+    user-select: none;
+    display: inline-block;
+}
+
+.tree-menu-resp .caret-resp::before {
+    content: "▶";
+    color: #333;
+    display: inline-block;
+    margin-right: 6px;
+    transform: rotate(0deg);
+    transition: transform 0.2s ease;
+}
+
+.tree-menu-resp .caret-resp.caret-down-resp::before {
+    transform: rotate(90deg);
+}
+
+.tree-menu-resp .nested-resp {
+    display: none;
+    margin-left: 15px;
+    list-style: disc;
+}
+
+.tree-menu-resp .active-resp {
+    display: block;
+}

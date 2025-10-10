@@ -1,0 +1,6 @@
+/* TopBar.css */
+
+nav.navbar {
+    flex-shrink: 0;
+    user-select: none;
+}

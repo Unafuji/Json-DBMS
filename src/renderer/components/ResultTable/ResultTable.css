@@ -1,0 +1,43 @@
+
+#data-table th,
+#data-table td {
+    font-size: 12px;
+    padding: 4px 6px;
+    vertical-align: middle;
+    box-sizing: border-box;
+}
+
+#result-footer {
+    padding-top: 6px;
+    font-size: 11px;
+    color: #555;
+    font-style: italic;
+}
+#call-message-content {
+    font-family: monospace;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+#data-table thead th {
+    position: relative;
+    user-select: none;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.col-resizer {
+    position: absolute;
+    top: 0;
+    right: -3px;
+    width: 6px;
+    height: 100%;
+    cursor: col-resize;
+    z-index: 2;
+} .col-resizer::after {
+      content: "";
+      position: absolute;
+      top: 0; bottom: 0; left: 2px;
+      width: 2px;
+      background: rgba(0,0,0,0.08);
+  }
+.resizing { cursor: col-resize !important; }

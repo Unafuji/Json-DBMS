@@ -1,0 +1,67 @@
+.tree-menu, .tree-menu ul, .tree-menu li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 13px;
+    color: #333;
+}
+
+.tree-menu li {
+    padding: 6px;
+    cursor: default;
+}
+
+.tree-menu li span {
+    display: inline-block;
+}
+.tree-menu .caret {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    user-select: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.tree-menu .caret::before {
+    content: "";
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-image: url("../../assets/icons/arrow_right.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 6px;
+    transition: transform 0.2s ease;
+}
+
+.tree-menu .caret.caret-down::before {
+    transform: rotate(90deg);
+}
+
+.tree-menu .caret::after {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-image: url("../../assets/icons/folder.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 6px;
+}
+
+.tree-menu .nested {
+    display: none;
+    padding-left: 20px;
+}
+
+.tree-menu .active {
+    display: block;
+}.p-3 {
+     padding: 0.5rem!important;
+ }.text-truncate {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+  }

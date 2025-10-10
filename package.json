@@ -1,0 +1,39 @@
+{
+  "name": "json-dbms",
+  "version": "1.0.0",
+  "main": "main.js",
+  "description": "A simple JSON DBMS desktop app",
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "keywords": [],
+  "devDependencies": {
+    "electron": "^38.1.2",
+    "electron-builder": "^26.0.12"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.4.1",
+    "bootstrap": "^5.3.8",
+    "stream-json": "^1.9.1"
+  },
+  "build": {
+    "appId": "com.example.jsondbms",
+    "productName": "Json DBMS",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "index.html",
+      "styles/**/*",
+      "src/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis"
+    }
+  }
+}

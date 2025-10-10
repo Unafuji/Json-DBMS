@@ -1,0 +1,38 @@
+<ul class="nav nav-tabs" id="resultTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="result-tab" data-bs-toggle="tab" data-bs-target="#result" type="button"
+                role="tab" aria-controls="result" aria-selected="true">
+            Result
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="call-tab" data-bs-toggle="tab" data-bs-target="#call" type="button" role="tab"
+                aria-controls="call" aria-selected="false">
+            Call Message
+        </button>
+    </li>
+</ul>
+
+<div class="tab-content" id="resultTabContent" style="border: 1px solid #dee2e6; border-top: none; padding: 10px;">
+
+    <div class="tab-pane fade show active" id="result" role="tabpanel" aria-labelledby="result-tab">
+        <h6 class="mb-2">Result</h6>
+        <table id="data-table" class="table table-bordered table-sm" style="font-size: 12px;">
+            <thead class="table-light">
+            <tr>
+            </tr>
+            </thead>
+            <tbody id="result-table-body">
+            </tbody>
+        </table>
+        <div id="result-footer" class="text-muted fst-italic" style="font-size: 11px;">
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="call" role="tabpanel" aria-labelledby="call-tab">
+        <h6 class="mb-2">Call Message</h6>
+        <div id="call-message-content" class="text-secondary" style="font-size: 13px;">
+        </div>
+    </div>
+
+</div>
