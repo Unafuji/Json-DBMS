@@ -98,9 +98,8 @@ const path = require('node:path');
 const fs = require('node:fs/promises');
 const { app, BrowserWindow, ipcMain, dialog, shell, session } = require('electron');
 
-const { initDb } = require('./src/main/db/sqlite');
+const { initDb } = require('./src/main/db/sqlite.js');
 require('./src/main/ipc/query.ipc');
-require('./src/main/ipc/edits.ipc');
 require('./src/main/ipc/ingest.ipc');
 
 // ---- DO NOT ship with TLS bypass. Remove these lines. ----

@@ -1,13 +1,14 @@
+// Existing imports at top of your preload
 const { contextBridge, ipcRenderer } = require('electron');
 
-contextBridge.exposeInMainWorld('localFs', {
-    readSmallJson: (path) => ipcRenderer.invoke('localfs:readSmallJson', path)
-    // optional deprecated alias:
-    // readText: (path) => ipcRenderer.invoke('localfs:readSmallJson', path)
+// --- Add new bridges below ---
+
+contextBridge.exposeInMainWorld('ingest', {
+    start: (args) => ipcRenderer.invoke('ingest:start', args),
+    cancel: () => ipcRenderer.invoke('ingest:cancel'),
+    onProgress: (cb) => ipcRenderer.on('ingest:progress', (_e, p) => cb(p)),
 });
 
-contextBridge.exposeInMainWorld('dbms', {
-    ingest: { start: (args) => ipcRenderer.invoke('ingest:start', args) },
-    query:  { run:   (args) => ipcRenderer.invoke('query:run',   args) },
-    edits:  { apply: (args) => ipcRenderer.invoke('edit:apply',  args) }
+contextBridge.exposeInMainWorld('query', {
+    page: (args) => ipcRenderer.invoke('query:page', args),
 });

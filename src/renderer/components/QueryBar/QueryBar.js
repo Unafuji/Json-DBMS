@@ -1,15 +1,16 @@
 import { renderResultTable, showCallMessage } from "../ResultTable/ResultTable.js";
 import { normalizeForTable } from "../../utils/normalize.js";
+import {addCollection} from "../Collections/Collection.js";
 
 async function loadLocalJson(filePath) {
     try {
         const response = await fetch(`file:///${filePath.replace(/\\/g, "/")}`);
         if (!response.ok) throw new Error(`Failed to load ${filePath}`);
         const data = await response.json();
-
         const table = normalizeForTable(data);
         renderResultTable(table);
         showCallMessage(`Loaded ${table.length} rows from local file: ${filePath}`);
+        addCollection(filePath);
     } catch (err) {
         console.error("Local file load error:", err);
         alert(`Error: ${err.message}`);
@@ -24,6 +25,8 @@ async function loadLocalFileObject(file) {
         const table = normalizeForTable(data);
         renderResultTable(table);
         showCallMessage(`Loaded ${table.length} rows from ${file.name}`);
+        addCollection(file.name);
+
     } catch (err) {
         console.error(err);
         alert(`Failed to read file: ${err.message}`);
@@ -64,13 +67,12 @@ export function initQueryBar() {
             if (file) await loadLocalFileObject(file);
         });
     }
-
 }
 
 export async function openAndShow(url) {
     const meta = await window.dbms.openSource({ url, formatHint: "auto" });
     const total = await window.dbms.rowCount();
-    const cols  = await window.dbms.columns();
+    const cols = await window.dbms.columns();
     await showPage(0, cols, total);
 }
 
@@ -79,7 +81,8 @@ const PAGE = 100;
 
 async function showPage(offset, cols, total) {
     const rows = await window.dbms.queryPage({
-        offset, limit: PAGE,
+        offset,
+        limit: PAGE,
         sort: [{ col: "createdAt", dir: "desc" }],
         filter: {} // plug in UI filters
     });
@@ -89,22 +92,11 @@ async function showPage(offset, cols, total) {
     updatePager({ offset, pageSize: PAGE, total });
 }
 
-// old function is now only for tiny files
 export async function fetchAndRenderEndpoint(url, method = "GET") {
     const { small, data } = await window.dbms.maybeSmall(url, { method });
     if (!small) return openAndShow(url);
     // small path: still virtualize
     worker.postMessage({ rows: Array.isArray(data) ? data : [data], cols: null });
 }
-
-// work
-// export async function fetchAndRenderEndpoint(url, method = "GET") {
-//     const response = await fetch(url, { method, headers: { "Content-Type": "application/json" } });
-//     if (!response.ok) throw new Error(`HTTP ${response.status} ${response.statusText}`);
-//     const data = await response.json();
-//     const table = normalizeForTable(data);
-//     renderResultTable(table);
-//     showCallMessage(`Fetched ${table.length} rows from ${url}`);
-// }
 
 document.addEventListener("DOMContentLoaded", initQueryBar);
