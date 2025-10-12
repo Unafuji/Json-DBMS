@@ -1,7 +1,7 @@
 import { renderResultTable, showCallMessage } from "../ResultTable/ResultTable.js";
 import { normalizeForTable } from "../../utils/normalize.js";
 import {addCollection} from "../Collections/Collection.js";
-
+/// (2)
 async function loadLocalJson(filePath) {
     try {
         const response = await fetch(`file:///${filePath.replace(/\\/g, "/")}`);
@@ -33,7 +33,7 @@ async function loadLocalFileObject(file) {
         showCallMessage(`Failed to read file: ${err.message}`);
     }
 }
-
+///(3)
 export function initQueryBar() {
     const methodSelect = document.getElementById("http-method");
     const queryInput = document.getElementById("query-input");

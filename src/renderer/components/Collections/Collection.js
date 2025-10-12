@@ -74,7 +74,7 @@ function renderCollections() {
         collectionsList.appendChild(li);
     });
 }
-
+/// (1)
 export function addCollection(endpoint) {
     debugger
     if (!collections.includes(endpoint)) {
