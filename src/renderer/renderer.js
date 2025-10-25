@@ -3,22 +3,6 @@ async function loadComponent(containerId, htmlPath, cssPath, jsPath, initFuncNam
     if (!container) return;
 
     try {
-        const htmlURL = htmlPath ? new URL(htmlPath, window.location.href) : null;
-        const cssURL = cssPath ? new URL(cssPath, window.location.href) : null;
-        const jsURL = jsPath ? new URL(jsPath, window.location.href) : null;
-
-        if (htmlURL) {
-            const res = await fetch(htmlURL);
-            if (!res.ok) throw new Error(`Failed to fetch ${htmlURL} (${res.status})`);
-            container.innerHTML = await res.text();
-        }
-
-        if (cssURL) {
-            const link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.href = cssURL.href;
-            document.head.appendChild(link);
-        }
 
         if (jsURL && initFuncName) {
             const module = await import(jsURL.href);
@@ -46,7 +30,6 @@ function setupResizers() {
     const queryEditor = document.getElementById('queryeditor-container');
     const tableResizer = document.getElementById('table-resizer');
     const resultTable = document.getElementById('resulttable-container');
-    const querybar = document.getElementById('query-bar');
 
     if (!sidebar || !sidebarResizer || !queryEditor || !tableResizer || !resultTable) {
         console.error('One or more resizer elements not found');
@@ -143,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
         './src/renderer/components/ResultTable/ResultTable.html',
         null,
         './src/renderer/components/ResultTable/ResultTable.js',
-        'initResultTable' // or 'renderResultTable'
+        'initResultTable'
     );
     loadComponent(
         'collection-container',
