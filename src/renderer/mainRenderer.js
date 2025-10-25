@@ -1,5 +1,5 @@
-import { setupResizers } from './core/resizer.js';
-import { loadComponent } from './core/loader.js';
+import { setupResizers } from '../core/resizer.js';
+import { loadComponent } from '../core/loader.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     setupResizers();

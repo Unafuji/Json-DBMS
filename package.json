@@ -1,13 +1,14 @@
 {
   "name": "json-dbms",
   "version": "1.0.0",
-  "main": "main.js",
+  "main": "src/main/main.js",
   "description": "A simple JSON DBMS desktop app",
   "author": "",
   "license": "ISC",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder"
+    "build": "electron-builder",
+    "debug": "npm run start"
   },
   "keywords": [],
   "devDependencies": {
@@ -17,6 +18,7 @@
   "dependencies": {
     "better-sqlite3": "^12.4.1",
     "bootstrap": "^5.3.8",
+    "split2": "^4.2.0",
     "stream-json": "^1.9.1"
   },
   "build": {

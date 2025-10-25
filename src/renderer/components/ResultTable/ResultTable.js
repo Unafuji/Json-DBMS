@@ -14,7 +14,7 @@ export function initResultTable() {
         console.warn("ResultTable: required DOM nodes not found. Check IDs in ResultTable.html.");
         return;
     }
-    clearTable(); // start clean
+    clearTable();
 }
 
 export function clearTable() {
@@ -81,7 +81,6 @@ export function showCallMessage(message) {
         return;
     }
     container.textContent = message || "";
-    // switchToTab("call");
 }
 
 function switchToTab(name /* "result" | "call" */) {

@@ -1,5 +1,5 @@
 import { renderResultTable, showCallMessage } from "../ResultTable/ResultTable.js";
-import { normalizeForTable } from "../../utils/normalize.js";
+import { normalizeForTable } from "../../../utils/normalize.js";
 import {addCollection} from "../Collections/Collection.js";
 /// (2)
 async function loadLocalJson(filePath) {

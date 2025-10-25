@@ -41,7 +41,6 @@ async function loadComponent(containerId, htmlPath, cssPath, jsPath, initFuncNam
 }
 
 function setupResizers() {
-    // GET ELEMENTS (all must exist)
     const sidebar = document.getElementById('sidebar-container');
     const sidebarResizer = document.getElementById('sidebar-resizer');
     const queryEditor = document.getElementById('queryeditor-container');
@@ -54,13 +53,11 @@ function setupResizers() {
         return;
     }
 
-    // Restore persisted sizes (optional but recommended)
     const savedSidebar = localStorage.getItem('sidebarWidth');
     if (savedSidebar) sidebar.style.width = savedSidebar;
     const savedQE = localStorage.getItem('queryEditorHeight');
     if (savedQE) queryEditor.style.height = savedQE;
 
-    // --- SIDE BAR WIDTH (drag left-right) ---
     sidebarResizer.addEventListener('mousedown', function (e) {
         e.preventDefault();
         document.body.style.userSelect = 'none';
@@ -87,13 +84,11 @@ function setupResizers() {
         window.addEventListener('mouseup', onMouseUp);
     });
 
-    // Optional: double-click to snap width
     sidebarResizer.addEventListener('dblclick', () => {
         sidebar.style.width = '280px';
         localStorage.setItem('sidebarWidth', '280px');
     });
 
-    // --- TABLE HEIGHT (drag up-down) ---
     tableResizer.addEventListener('mousedown', function (e) {
         e.preventDefault();
         document.body.style.userSelect = 'none';
@@ -172,6 +167,4 @@ document.addEventListener('DOMContentLoaded', () => {
         './src/renderer/components/QueryBar/QueryBar.js',
         'initQueryBar'
     );
-
-
 });
