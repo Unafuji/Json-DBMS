@@ -19,6 +19,7 @@
     "better-sqlite3": "^12.4.1",
     "bootstrap": "^5.3.8",
     "split2": "^4.2.0",
+    "stream-chain": "^3.4.0",
     "stream-json": "^1.9.1"
   },
   "build": {

@@ -30,7 +30,6 @@ export function normalizeForTable(input) {
                 if (Array.isArray(pkg)) {
                     for (const item of pkg) {
                         if (isPlainObject(item)) {
-                            // prefer item.pushKey if present
                             rows.push(safeFlattenOneLevel({uid, ...userMeta, ...item}));
                         }
                     }
@@ -38,7 +37,6 @@ export function normalizeForTable(input) {
                 }
 
                 if (isPlainObject(pkg)) {
-                    // package is OBJECT-of-objects
                     for (const pushKey of Object.keys(pkg)) {
                         const item = pkg[pushKey];
                         if (isPlainObject(item)) {

@@ -1,23 +1,55 @@
 import { renderResultTable, showCallMessage } from "../ResultTable/ResultTable.js";
 import { normalizeForTable } from "../../../utils/normalize.js";
-import {addCollection} from "../Collections/Collection.js";
-/// (2)
-async function loadLocalJson(filePath) {
+import { addCollection } from "../Collections/Collection.js";
+
+async function streamLocalJson(filePath) {
     try {
-        const response = await fetch(`file:///${filePath.replace(/\\/g, "/")}`);
-        if (!response.ok) throw new Error(`Failed to load ${filePath}`);
-        const data = await response.json();
-        const table = normalizeForTable(data);
-        renderResultTable(table);
-        showCallMessage(`Loaded ${table.length} rows from local file: ${filePath}`);
+        console.log("[QueryBar] Starting stream for:", filePath);
+        showCallMessage(`Streaming data from ${filePath}...`);
         addCollection(filePath);
+
+        const rows = [];
+
+        const onChunk = (chunk) => {
+            rows.push(chunk);
+            if (rows.length % 1000 === 0) {
+                const partialTable = normalizeForTable(rows);
+                renderResultTable(partialTable);
+            }
+        };
+
+        const onEnd = () => {
+            const table = normalizeForTable(rows);
+            renderResultTable(table);
+            showCallMessage(`Finished streaming ${rows.length} rows from ${filePath}`);
+            console.log("[QueryBar] Stream finished.");
+            cleanup();
+        };
+
+        const onError = (err) => {
+            console.error("[QueryBar] Stream error:", err);
+            alert(`Stream error: ${err}`);
+            showCallMessage(`Error streaming ${filePath}: ${err}`);
+            cleanup();
+        };
+
+        const cleanup = () => {
+            window.stream.offChunk?.(onChunk);
+            window.stream.offEnd?.(onEnd);
+            window.stream.offError?.(onError);
+        };
+
+        window.stream.onChunk(onChunk);
+        window.stream.onEnd(onEnd);
+        window.stream.onError(onError);
+
+        await window.stream.openJson(filePath);
     } catch (err) {
-        console.error("Local file load error:", err);
+        console.error("Stream load error:", err);
         alert(`Error: ${err.message}`);
         showCallMessage(`Error: ${err.message}`);
     }
 }
-
 async function loadLocalFileObject(file) {
     try {
         const text = await file.text();
@@ -26,14 +58,18 @@ async function loadLocalFileObject(file) {
         renderResultTable(table);
         showCallMessage(`Loaded ${table.length} rows from ${file.name}`);
         addCollection(file.name);
-
     } catch (err) {
         console.error(err);
         alert(`Failed to read file: ${err.message}`);
         showCallMessage(`Failed to read file: ${err.message}`);
     }
 }
-///(3)
+
+export async function fetchAndRenderEndpoint(url, method = "GET") {
+    const { data } = await window.dbms.maybeSmall(url, { method });
+    worker.postMessage({ rows: Array.isArray(data) ? data : [data], cols: null });
+}
+
 export function initQueryBar() {
     const methodSelect = document.getElementById("http-method");
     const queryInput = document.getElementById("query-input");
@@ -55,7 +91,7 @@ export function initQueryBar() {
         }
 
         if (/^(?:[a-zA-Z]:\\|\\\\|file:\/{2})/.test(value)) {
-            await loadLocalJson(value);
+            await streamLocalJson(value);
         } else {
             await fetchAndRenderEndpoint(value, method);
         }
@@ -67,36 +103,6 @@ export function initQueryBar() {
             if (file) await loadLocalFileObject(file);
         });
     }
-}
-
-export async function openAndShow(url) {
-    const meta = await window.dbms.openSource({ url, formatHint: "auto" });
-    const total = await window.dbms.rowCount();
-    const cols = await window.dbms.columns();
-    await showPage(0, cols, total);
-}
-
-let currentOffset = 0;
-const PAGE = 100;
-
-async function showPage(offset, cols, total) {
-    const rows = await window.dbms.queryPage({
-        offset,
-        limit: PAGE,
-        sort: [{ col: "createdAt", dir: "desc" }],
-        filter: {} // plug in UI filters
-    });
-
-    worker.postMessage({ rows, cols }); // worker will normalize
-    currentOffset = offset;
-    updatePager({ offset, pageSize: PAGE, total });
-}
-
-export async function fetchAndRenderEndpoint(url, method = "GET") {
-    const { small, data } = await window.dbms.maybeSmall(url, { method });
-    if (!small) return openAndShow(url);
-    // small path: still virtualize
-    worker.postMessage({ rows: Array.isArray(data) ? data : [data], cols: null });
 }
 
 document.addEventListener("DOMContentLoaded", initQueryBar);
