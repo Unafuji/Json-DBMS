@@ -1,7 +1,7 @@
 {
   "name": "json-dbms",
   "version": "1.0.0",
-  "main": "src/main/main.js",
+  "main": "main.js",
   "description": "A simple JSON DBMS desktop app",
   "author": "",
   "license": "ISC",

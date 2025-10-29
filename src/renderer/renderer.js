@@ -16,31 +16,3 @@ document.addEventListener('DOMContentLoaded', () => {
     initQueryBar();
     setupStreamHandlers();
 });
-
-function setupStreamHandlers() {
-    document.addEventListener('stream:open', async (e) => {
-        const {filePath} = e.detail;
-        console.log('[renderer] Starting stream for:', filePath);
-
-        try {
-            await window.stream.openJson(filePath);
-        } catch (err) {
-            console.error('[renderer] Stream open failed:', err);
-        }
-    });
-
-    window.stream.onChunk((chunk) => {
-        console.debug('[renderer] Streamed chunk:', chunk);
-
-        const event = new CustomEvent('stream:chunk', {detail: chunk});
-        document.dispatchEvent(event);
-    });
-    window.stream.onEnd(() => {
-        console.log('[renderer] Stream finished.');
-        document.dispatchEvent(new Event('stream:end'));
-    });
-    window.stream.onError((err) => {
-        console.error('[renderer] Stream error:', err);
-        document.dispatchEvent(new CustomEvent('stream:error', {detail: err}));
-    });
-}
