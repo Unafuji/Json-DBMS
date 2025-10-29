@@ -3,8 +3,8 @@ const path = require('node:path');
 
 function createWindow() {
     const win = new BrowserWindow({
-        width: 1200,
-        height: 800,
+        // width: 1200,
+        // height: 800,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             contextIsolation: true,
@@ -12,6 +12,8 @@ function createWindow() {
             sandbox: true
         }
     });
+    win.maximize(); // Make it fill the screen (normal fullscreen)
+
     // win.setMenu(null);
     win.loadFile('index.html');
     win.once('ready-to-show', () => {
@@ -30,8 +32,8 @@ function createDialog(parentWindow) {
     );
     console.log('Dialog path:', dialogPath);
     const dialogWin = new BrowserWindow({
-        width: 500,
-        height: 300,
+        width: 1200,
+        height: 800,
         parent: parentWindow,
         modal: true,
         show: false,

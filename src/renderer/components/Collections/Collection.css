@@ -29,7 +29,6 @@
     display: inline-block;
     width: 12px;
     height: 12px;
-    background-image: url("../../assets/icons/arrow_right.png");
     background-size: contain;
     background-repeat: no-repeat;
     margin-right: 6px;
@@ -45,7 +44,6 @@
     display: inline-block;
     width: 16px;
     height: 16px;
-    background-image: url("../../assets/icons/folder.png");
     background-size: contain;
     background-repeat: no-repeat;
     margin-right: 6px;
