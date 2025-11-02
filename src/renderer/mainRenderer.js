@@ -43,4 +43,11 @@ document.addEventListener('DOMContentLoaded', () => {
         './src/renderer/components/QueryBar/QueryBar.js',
         'initQueryBar'
     );
+
+    loadComponent(
+        'tool-bar',
+        './src/renderer/components/toolbar/toolbar.html',
+        './src/renderer/components/toolbar/toolbar.css',
+        'initQueryBar'
+    );
 });

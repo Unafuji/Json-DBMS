@@ -1,0 +1,27 @@
+.toolbar {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+    background: transparent;
+    padding: 0.5rem;
+}
+
+.toolbar button {
+    background: transparent;
+    border: 1px solid #ccc;
+    color: #333;
+    font-size: 1.25rem;
+    border-radius: 8px;
+    width: 45px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.toolbar button:hover {
+    border-color: #0d6efd;
+    color: #0d6efd;
+    background-color: rgba(13, 110, 253, 0.05);
+}
