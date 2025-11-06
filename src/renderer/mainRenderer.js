@@ -29,14 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
     );
 
     loadComponent(
-        'respond-container',
-        './src/renderer/components/Responds/Respond.html',
-        './src/renderer/components/Responds/Respond.css',
-        './src/renderer/components/Responds/Respond.js',
-        'initResponds'
-    );
-
-    loadComponent(
         'query-bar',
         './src/renderer/components/QueryBar/QueryBar.html',
         './src/renderer/components/QueryBar/QueryBar.css',
